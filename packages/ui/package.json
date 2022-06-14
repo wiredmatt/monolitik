@@ -1,0 +1,24 @@
+{
+  "name": "ui",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint *.ts*",
+    "build": "NODE_ENV=production tailwind build -i index.css -o dist/tailwind.css",
+    "tw-watch": "tailwindcss -i index.css -o ./dist/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.12",
+    "@types/react-dom": "18.0.5",
+    "autoprefixer": "^10.4.7",
+    "eslint": "^7.32.0",
+    "eslint-config-react": "*",
+    "postcss": "^8.4.14",
+    "react": "18.1.0",
+    "tailwindcss": "^3.1.2",
+    "tsconfig": "*",
+    "typescript": "^4.5.5"
+  }
+}

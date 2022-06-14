@@ -1,0 +1,27 @@
+{
+  "name": "landing",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "12.1.6",
+    "next-transpile-modules": "^9.0.0",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "ui": "*"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.42",
+    "@types/react": "18.0.12",
+    "@types/react-dom": "18.0.5",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "12.1.6",
+    "eslint-config-next-extended": "*",
+    "tsconfig": "*",
+    "typescript": "^4.5.5"
+  }
+}
