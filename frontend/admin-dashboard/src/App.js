@@ -1,12 +1,16 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom'
 
-import HomePage from './pages';
-import StatusPage from './pages/admin/status';
-import CreditsPage from './pages/admin/credits';
-import DashboardLayout from './dashboard/layout';
-import ArchivesPage from './pages/admin/archives';
-import SettingsPage from './pages/admin/settings';
-import DocumentationPage from './pages/admin/documentation';
+import DashboardLayout from './dashboard/layout'
+import HomePage from './pages'
+import ArchivesPage from './pages/admin/archives'
+import CreditsPage from './pages/admin/credits'
+import DocumentationPage from './pages/admin/documentation'
+import SettingsPage from './pages/admin/settings'
+import StatusPage from './pages/admin/status'
 
 function App() {
   return (
@@ -34,7 +38,7 @@ function App() {
         </Switch>
       </DashboardLayout>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": [
+      "ES2018",
+      "ESNext",
+      "DOM",
+      "ESNext.AsyncIterable"
+    ],
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "Node",
+    "declaration": true,
+    "allowJs": true,
+    "strict": false,
+  },
+  "include": [
+    "index.ts"
+  ]
+}

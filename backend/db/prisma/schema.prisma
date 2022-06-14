@@ -1,0 +1,25 @@
+datasource db {
+    provider          = "postgresql"
+    url               = env("DATABASE_URL")
+    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    username String @unique
+    password String
+    roles    Role[]
+}
+
+model Asset {
+    id Int @id @default(autoincrement())
+}
+
+enum Role {
+    INVESTOR
+    AGENCY
+    ADMIN
+}

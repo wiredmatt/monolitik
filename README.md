@@ -1,77 +1,59 @@
-# Turborepo starter
+# Monolitik Template
 
-This is an official Yarn v1 starter turborepo.
+🚀 Powered by [Turborepo](https://turborepo.org/)
 
-## What's inside?
+## Motivation
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/lang/en/) as a package manager. It includes the following packages/apps:
+Having the code split up in multiple repositories is definitely a good practice, having the backend and the frontend on their own repositories is certainly a clean approach. But this ends up complicating things for agile development, where prototypes need to **ship** fast, and this is even more noticeable in small development teams, where usually one person takes care of each side of the project, so having everything in one place ends up being for the best, everyone can easily know how things look like both in the backend and in the frontend, without having to head over to their Organization and look for the other side of the project, just to know what an API endpoint does.
 
-### Apps and Packages
+## About monorepos
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `code-styling`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+[Uber Technology Day: Monorepo to Multirepo and Back Again](https://www.youtube.com/watch?v=lV8-1S28ycM)
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-### Utilities
+[Big JavaScript Projects - Code Sharing](https://www.youtube.com/watch?v=MflUMIeADZU)
 
-This turborepo has some additional tools already setup for you:
+## Usage
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+There are 6 packages in this monorepo: 
 
-## Setup
+* backend
+  - **db**: Prisma models & DB interface
+  - **server**: REST API
 
-This repository is used in the `npx create-turbo` command, and selected when choosing which package manager you wish to use with your monorepo (Yarn).
+* frontend
+  - **landing**: landing page
+  - **admin-dashboard**: admin dashboard
+  - **ui**: reusable react components
 
-### Build
+You can interact with them through the following scripts:
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run dev
+```json
+"scripts": {
+  "db": "yarn workspace db",
+  "server": "yarn workspace server",
+  "landing": "yarn workspace landing", 
+  "a-d": "yarn workspace admin-dashboard", 
+  "ui": "yarn workspace ui" 
+},
 ```
 
-### Remote Caching
+### Examples
 
-Turborepo can use a technique known as [Remote Caching (Beta)](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- Run the server in dev mode:
 
-By default, Turborepo will cache locally. To enable Remote Caching (Beta) you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+yarn server dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+- Adding the web3 and web3-utils dependencies to the server
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
+```bash
+yarn server add web3 web3-utils
 ```
 
-## Useful Links
+- Adding the **db** package to the server as a dependency
 
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching (Beta)](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+```bash
+yarn server add "db@*"
+```

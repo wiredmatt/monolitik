@@ -3,19 +3,26 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
+    "backend/*",
     "frontend/*",
     "packages/*",
-    "code-styling/*"
+    "linters/*"
   ],
   "scripts": {
     "build": "turbo run build",
+    "test": "turbo run test",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db": "yarn workspace db",
+    "server": "yarn workspace server",
+    "landing": "yarn workspace landing",
+    "a-d": "yarn workspace admin-dashboard",
+    "ui": "yarn workspace ui"
   },
   "devDependencies": {
     "eslint-config-base": "*",
-    "prettier": "latest",
+    "prettier": "^2.7.0",
     "turbo": "latest"
   },
   "engines": {
