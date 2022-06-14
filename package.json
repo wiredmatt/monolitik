@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
+    "_config/*",
     "backend/*",
     "frontend/*",
-    "packages/*",
     "linters/*"
   ],
   "scripts": {
@@ -18,7 +18,7 @@
     "server": "yarn workspace server",
     "landing": "yarn workspace landing",
     "a-d": "yarn workspace admin-dashboard",
-    "ui": "yarn workspace ui"
+    "ui-kit": "yarn workspace ui"
   },
   "devDependencies": {
     "eslint-config-base": "*",

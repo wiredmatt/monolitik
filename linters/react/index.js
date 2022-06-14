@@ -29,7 +29,8 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/button-has-type': 'off',
     'react/prop-types': 'off',
-    'react/destructuring-assignment': 'off'
+    'react/destructuring-assignment': 'off',
+    '@typescript-eslint/no-empty-interface': 'off'
   },
   settings: {
     'import/parsers': {

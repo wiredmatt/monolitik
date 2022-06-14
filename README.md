@@ -1,5 +1,8 @@
-# Monolitik Template
+<p align="center">
+  <img width="240" height="180" src="https://cdn.dribbble.com/users/702032/screenshots/3410973/media/de2f03b8916a47de0291b41a21ced8c5.png?compress=1&resize=400x300&vertical=top"/>
+</p>
 
+<h1 align="center">Monolitik</h1>
 🚀 Powered by [Turborepo](https://turborepo.org/)
 
 ## Motivation
@@ -34,7 +37,7 @@ You can interact with them through the following scripts:
   "server": "yarn workspace server",
   "landing": "yarn workspace landing", 
   "a-d": "yarn workspace admin-dashboard", 
-  "ui": "yarn workspace ui" 
+  "ui-kit": "yarn workspace ui" 
 },
 ```
 
