@@ -2,6 +2,14 @@ module.exports = {
   env: {
     browser: true
   },
+  overrides: [
+    {
+      files: ['**/*.test.js', '**/*.test.jsx'],
+      env: {
+        jest: true
+      }
+    }
+  ],
   extends: [
     'plugin:react/recommended',
     'base',

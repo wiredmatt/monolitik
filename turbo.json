@@ -14,6 +14,12 @@
       ],
       "outputs": []
     },
-    "lint": {}
+    "lint": {},
+    "dev": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    }
   }
 }

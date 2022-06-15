@@ -9,7 +9,8 @@
     "export": "next export",
     "clean": "rimraf .next out",
     "lint": "prettier --config ../../.prettierrc --write . && next lint",
-    "build-types": "tsc --noEmit --pretty"
+    "build-types": "tsc --noEmit --pretty",
+    "test": "echo \"No tests specified\""
   },
   "dependencies": {
     "classnames": "^2.3.1",

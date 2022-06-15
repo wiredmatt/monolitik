@@ -2,9 +2,9 @@
   "name": "admin-dashboard",
   "version": "1.0.0",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/jest-dom": "^5.16.0",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-router-dom": "^6.3.0",
@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "prettier --config ../../.prettierrc --write . && eslint src/**/*.ts* --fix"
   },
