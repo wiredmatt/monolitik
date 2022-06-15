@@ -19,7 +19,7 @@ Having the code split up in multiple repositories is definitely a good practice,
 
 ## Usage
 
-There are 6 packages in this monorepo: 
+There are 6 main packages in this monorepo: 
 
 * backend
   - **db**: Prisma models & DB interface
@@ -28,7 +28,7 @@ There are 6 packages in this monorepo:
 * frontend
   - **landing**: landing page
   - **admin-dashboard**: admin dashboard
-  - **ui**: reusable react components
+  - **ui-kit**: reusable react components
 
 You can interact with them through the following scripts:
 
@@ -38,7 +38,7 @@ You can interact with them through the following scripts:
   "server": "yarn workspace server",
   "landing": "yarn workspace landing", 
   "a-d": "yarn workspace admin-dashboard", 
-  "ui-kit": "yarn workspace ui" 
+  "ui": "yarn workspace ui-kit" 
 },
 ```
 
@@ -61,3 +61,36 @@ yarn landing add web3 web3-utils
 ```bash
 yarn server add "db@*"
 ```
+
+### Extra
+
+#### linters
+
+A collection of presets for eslint rules and configuration
+
+- **base**: Generic rules
+- **nest**: For NestJS apps
+- **next**: For NextJS apps
+- **react**: For React Apps 
+
+If you want to create a new linter, duplicate one of the existing directories and override the `index.js` file as needed.
+
+#### _config
+
+A collection of tsconfig files
+
+- **base**: Generic TS code
+- **next**: For NextJS apps
+- **react-library**: For React Apps and component libraries 
+
+#### CI/CD
+
+Github actions that'll run and check if your changes broke everything
+
+```yml
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+```
+
+Make sure to configurate your secrets and fill in the variables above. [Guide](https://turborepo.org/docs/ci/github-actions#remote-caching)
