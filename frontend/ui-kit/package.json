@@ -5,7 +5,7 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint *.ts*",
+    "lint": "prettier --config ../../.prettierrc --write . && eslint *.ts*",
     "build": "NODE_ENV=production tailwind build -i index.css -o dist/tailwind.css",
     "tw-watch": "tailwindcss -i index.css -o ./dist/tailwind.css --watch",
     "storybook": "start-storybook -p 6006",
@@ -46,5 +46,11 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "framer-motion": "^6"
-  }
+  },
+  "eslintIgnore": [
+    ".storybook",
+    ".turbo",
+    "dist",
+    "node_modules"
+  ]
 }
