@@ -53,7 +53,7 @@ yarn server dev
 - Adding the web3 and web3-utils dependencies to the server
 
 ```bash
-yarn server add web3 web3-utils
+yarn landing add web3 web3-utils
 ```
 
 - Adding the **db** package to the server as a dependency

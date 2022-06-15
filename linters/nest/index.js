@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['eslint-config-base', 'prettier'],
+  extends: ['eslint-config-base'],
   parser: '@typescript-eslint/parser',
   env: {
     node: true,
@@ -17,5 +17,6 @@ module.exports = {
       { argsIgnorePattern: '(Service|Model)' }
     ],
     'no-empty-function': ['error', { allow: ['constructors'] }]
-  }
+  },
+  plugins: ['prettier']
 }

@@ -2,8 +2,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'airbnb',
-    'plugin:@typescript-eslint/recommended',
-    'prettier'
+    'plugin:@typescript-eslint/recommended'
   ],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -38,6 +37,7 @@ module.exports = {
         js: 'never',
         json: 'always'
       }
-    ]
+    ],
+    'prettier/prettier': 'error'
   }
 }

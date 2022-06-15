@@ -18,7 +18,7 @@
     "server": "yarn workspace server",
     "landing": "yarn workspace landing",
     "a-d": "yarn workspace admin-dashboard",
-    "ui-kit": "yarn workspace ui"
+    "ui": "yarn workspace ui-kit"
   },
   "devDependencies": {
     "eslint-config-base": "*",

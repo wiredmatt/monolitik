@@ -1,4 +1,8 @@
 module.exports = {
-  extends: ['eslint-config-react', 'prettier'],
+  extends: [
+    'plugin:storybook/recommended',
+    'eslint-config-react',
+    'prettier'
+  ],
   root: true
 }

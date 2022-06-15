@@ -30,7 +30,8 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/prop-types': 'off',
     'react/destructuring-assignment': 'off',
-    '@typescript-eslint/no-empty-interface': 'off'
+    '@typescript-eslint/no-empty-interface': 'off',
+    'react/require-default-props': 'off'
   },
   settings: {
     'import/parsers': {
