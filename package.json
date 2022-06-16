@@ -9,6 +9,7 @@
     "linters/*"
   ],
   "scripts": {
+    "prepare": "husky install .github/husky",
     "build": "turbo run build",
     "test": "turbo run test",
     "dev": "turbo run dev --parallel",
@@ -20,7 +21,10 @@
     "ui": "yarn workspace ui-kit"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
     "eslint-config-base": "*",
+    "husky": "^8.0.1",
     "prettier": "^2.7.0",
     "turbo": "latest"
   },
