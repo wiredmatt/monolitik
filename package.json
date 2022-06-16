@@ -9,7 +9,7 @@
     "linters/*"
   ],
   "scripts": {
-    "prepare": "husky install .github/husky",
+    "prepare": "is-ci || husky install .github/husky",
     "build": "turbo run build",
     "test": "turbo run test",
     "dev": "turbo run dev --parallel",
@@ -25,6 +25,7 @@
     "@commitlint/config-conventional": "^17.0.2",
     "eslint-config-base": "*",
     "husky": "^8.0.1",
+    "is-ci": "^3.0.1",
     "prettier": "^2.7.0",
     "turbo": "latest"
   },
