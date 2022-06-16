@@ -9,6 +9,7 @@
     "linters/*"
   ],
   "scripts": {
+    "yarn": "yarn install 2> >(grep -v warning 1>&2)",
     "prepare": "is-ci || husky install .github/husky",
     "build": "turbo run build",
     "test": "turbo run test",
