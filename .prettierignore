@@ -1,5 +1,7 @@
-node_modules
 .next
-build
-out
 .turbo
+node_modules
+build
+dist
+out
+public

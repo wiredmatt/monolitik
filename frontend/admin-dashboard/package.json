@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
-    "lint": "prettier --config ../../.prettierrc --write . && eslint src/**/*.ts* --fix"
+    "lint": "prettier --write . --ignore-path <(cat ../../.prettierignore) && eslint --fix --ignore-pattern <(cat ../../.eslintignore)"
   },
   "browserslist": {
     "production": [
@@ -42,10 +42,5 @@
     "@types/node": "^17.0.13",
     "@types/react": "18.0.12",
     "@types/react-dom": "18.0.5"
-  },
-  "eslintIgnore": [
-    "build",
-    ".turbo",
-    "node_modules"
-  ]
+  }
 }

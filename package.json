@@ -13,7 +13,6 @@
     "test": "turbo run test",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db": "yarn workspace db",
     "server": "yarn workspace server",
     "landing": "yarn workspace landing",

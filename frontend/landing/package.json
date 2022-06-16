@@ -8,7 +8,7 @@
     "build-stats": "cross-env ANALYZE=true npm run build",
     "export": "next export",
     "clean": "rimraf .next out",
-    "lint": "prettier --config ../../.prettierrc --write . && next lint",
+    "lint": "prettier --write . --ignore-path <(cat ../../.prettierignore) && eslint --fix --ignore-pattern <(cat ../../.eslintignore)",
     "build-types": "tsc --noEmit --pretty",
     "test": "echo \"No tests specified\""
   },
@@ -39,11 +39,5 @@
     "tailwindcss": "^3.1.2",
     "tsconfig": "*",
     "typescript": "^4.5.5"
-  },
-  "eslintIgnore": [
-    ".next",
-    ".turbo",
-    "out",
-    "node_modules"
-  ]
+  }
 }
