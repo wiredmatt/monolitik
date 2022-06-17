@@ -4,5 +4,6 @@ export const AppConfig = {
   description:
     'Get access to tokenized assets in the blockchain',
   locale: 'en',
-  asset: 'Real Estate'
+  asset: 'Real Estate',
+  site_url: 'https://monolitik-landing.netlify.app/'
 }
