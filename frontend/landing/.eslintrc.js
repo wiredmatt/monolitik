@@ -1,4 +1,4 @@
 module.exports = {
-  extends: ['eslint-config-next-extended', 'prettier'],
+  extends: ['eslint-config-react', 'prettier'],
   root: true
 }
