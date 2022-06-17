@@ -11,6 +11,7 @@ const Index = () => (
     <NextSeo
       title={AppConfig.site_name}
       description={AppConfig.description}
+      canonical={AppConfig.site_url}
     />
     <IndexNoSSR />
   </>

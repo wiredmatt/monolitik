@@ -19,11 +19,9 @@
     "gitlanding": "^0.19.1",
     "next": "^12.0.9",
     "next-seo": "^4.29.0",
-    "next-transpile-modules": "^9.0.0",
     "onyxia-ui": "^0.45.0",
     "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "ui-kit": "*"
+    "react-dom": "18.1.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.0.9",
