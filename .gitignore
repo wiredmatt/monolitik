@@ -10,6 +10,7 @@ coverage
 
 # next.js
 .next/
+_next/
 out/
 build
 
@@ -31,3 +32,6 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# Local Netlify folder
+.netlify

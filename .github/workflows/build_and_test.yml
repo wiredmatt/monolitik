@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+      name: Build and Test only affected code
+      timeout-minutes: 15
+      runs-on: ${{ matrix.os }}
+      # To use Remote Caching, uncomment the next lines and follow the steps below.
+      env:
+        TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+        TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      strategy:
+        matrix:
+          os: [ubuntu-latest]
+
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+          with:
+            fetch-depth: 2
+
+        - name: Setup Node.js environment
+          uses: actions/setup-node@v2
+          with:
+            node-version: 16
+            cache: 'yarn'
+
+        - name: Install dependencies
+          run: yarn
+        
+        - id: file_changes
+          name: File Changes
+          uses: tj-actions/changed-files@v23
+
+        - name: Ouput File Changes
+          run: echo '${{ steps.changed-files.outputs.all_changed_files }}'
+
+        - name: Build and test ui-kit
+          if: contains(steps.changed-files.outputs.all_changed_files, '"frontend/ui-kit/')
+          run: yarn ui-kit build && yarn ui-kit test
+
+        - name: Build and test admin-dashboard
+          if: contains(steps.changed-files.outputs.all_changed_files, '"frontend/admin-dashboard/') || contains(steps.file_changes.outputs.files , '"frontend/uikit/')
+          run: yarn admin-dashboard build && yarn admin-dashboard test
+          
+        - name: Build and test landing
+          if: contains(steps.changed-files.outputs.all_changed_files, '"frontend/landing/') || contains(steps.file_changes.outputs.files , '"frontend/uikit/')
+          run: yarn landing build && yarn landing test
+
+        - name: Build and test db
+          if: contains(steps.changed-files.outputs.all_changed_files, '"backend/db/')
+          run: yarn db build && yarn db test
+
+        - name: Build and test server
+          if: contains(steps.changed-files.outputs.all_changed_files, '"backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
+          run: yarn server build && yarn server test
