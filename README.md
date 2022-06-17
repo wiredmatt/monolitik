@@ -94,3 +94,40 @@ env:
 ```
 
 Make sure to configurate your secrets and fill in the variables above. [Guide](https://turborepo.org/docs/ci/github-actions#remote-caching)
+
+### Deployments
+
+#### Deploy a microfrontend to a serverless
+
+```bash
+cd frontend/landing
+```
+
+Create a `netlify.toml` config file:
+
+```toml
+[build]
+  ignore = "git diff --quiet HEAD^ . ../ui-kit/"
+  command = "yarn build"
+  publish = "build"
+
+[build.environment]
+  NETLIFY_USE_YARN = "true"
+```
+
+Install netlify
+
+```bash
+npm i -g netlify-cli
+netlify init
+```
+
+Choose:
+
+1. Create and configure a new site
+2. Select your team
+3. Choose a site name
+4. Set the base directory to `frontend/landing`
+5. For build command, input `yarn build`
+6. For directory to deploy, choose the output directory that the build command generates. Nextjs outputs to `.next` and react does so to `build`. Following the landing example, you will input `frontend/landing/build`
+7. Leave blank for functions
