@@ -10,7 +10,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  get_file_changes:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: 
+        os: [ubuntu-latest]
+    
+    outputs:
+      should_run: ${{ steps.should_run.outputs.value }}
+      changes: ${{ steps.changes.outputs.all_changed_files }}
+
+    steps:
+      - id: changes
+        name: File Changes
+        uses: tj-actions/changed-files@v23
+
+      - name: Ouput Changed files
+        run: |
+          for file in ${{ steps.changes.outputs.all_changed_files }}; do
+            echo $file
+          done
+      
+      - id: should_run
+        run: echo ::set-output name=value::${{ contains(steps.changes.outputs.all_changed_files, 'frontend/') }}
+
   build_test_deploy:
+      needs: get_file_changes
+      if: ${{ needs.get_file_changes.outputs.should_run }}
+
       name: Build test and deploy frontend
       timeout-minutes: 15
       runs-on: ${{ matrix.os }}
@@ -36,25 +63,15 @@ jobs:
 
         - name: Install dependencies
           run: yarn
-        
-        - id: changes
-          name: File Changes
-          uses: tj-actions/changed-files@v23
-
-        - name: Ouput Changed files
-          run: |
-            for file in ${{ steps.changes.outputs.all_changed_files }}; do
-              echo $file
-            done
-
+          
         - name: Build and test ui-kit
-          if: contains(steps.changes.outputs.all_changed_files, 'frontend/ui-kit/')
+          if: contains(needs.get_file_changes.outputs.changes, 'frontend/ui-kit/')
           run: yarn ui-kit build && yarn ui-kit test
 
         - name: Build and test admin-dashboard
-          if: contains(steps.changes.outputs.all_changed_files, 'frontend/admin-dashboard/') || contains(steps.file_changes.outputs.files , '"frontend/uikit/')
+          if: contains(needs.get_file_changes.outputs.changes, 'frontend/admin-dashboard/') || contains(needs.get_file_changes.outputs.changes, '"frontend/uikit/')
           run: yarn admin-dashboard build && yarn admin-dashboard test
           
         - name: Build and test landing
-          if: contains(steps.changes.outputs.all_changed_files, 'frontend/landing/') || contains(steps.file_changes.outputs.files , '"frontend/uikit/')
+          if: contains(needs.get_file_changes.outputs.changes, 'frontend/landing/') || contains(needs.get_file_changes.outputs.changes, '"frontend/uikit/')
           run: yarn landing build && yarn landing test

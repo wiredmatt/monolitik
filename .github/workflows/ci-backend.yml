@@ -10,7 +10,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  get_file_changes:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: 
+        os: [ubuntu-latest]
+    
+    outputs:
+      should_run: ${{ steps.should_run.outputs.value }}
+      changes: ${{ steps.changes.outputs.all_changed_files }}
+
+    steps:
+      - id: changes
+        name: File Changes
+        uses: tj-actions/changed-files@v23
+
+      - name: Ouput Changed files
+        run: |
+          for file in ${{ steps.changes.outputs.all_changed_files }}; do
+            echo $file
+          done
+      
+      - id: should_run
+        run: echo ::set-output name=value::${{ contains(steps.changes.outputs.all_changed_files, 'backend/') }}
+
   build_test_deploy:
+      needs: get_file_changes
+      if: ${{ needs.get_file_changes.outputs.should_run }}
+
       # To use Remote Caching, uncomment the next lines and follow the steps below.
       env:
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -54,16 +81,6 @@ jobs:
 
         - name: Install dependencies
           run: yarn
-        
-        - id: changes
-          name: File Changes
-          uses: tj-actions/changed-files@v23
-
-        - name: Ouput Changed files
-          run: |
-            for file in ${{ steps.changes.outputs.all_changed_files }}; do
-              echo $file
-            done
 
         - name: Build and test db
           if: contains(steps.changes.outputs.all_changed_files, 'backend/db/')
@@ -76,14 +93,14 @@ jobs:
             FILE_DATA: "web: yarn server prod"
 
         - name: Build, test and deploy server
-          if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
+          if: contains(needs.get_file_changes.outputs.changes, 'backend/server/') || contains(needs.get_file_changes.outputs.changes, '"backend/db/')
           run: |
               yarn db build
               yarn server build && yarn server test
-              zip -9 -qr '${{ github.ref_name }}_${{ github.sha }}.zip' .
+              zip -9 -qr '${{ github.sha }}.zip' .
           
         - name: Deploy to Beanstalk
-          if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
+          if: contains(needs.get_file_changes.outputs.changes, 'backend/server/') || contains(needs.get_file_changes.outputs.changes, '"backend/db/')
           uses: einaregilsson/beanstalk-deploy@v18
           with:
             aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -93,4 +110,4 @@ jobs:
             version_label: '${{ github.ref_name }}_${{ github.sha }}'
             region: us-east-1
             use_existing_version_if_available: true
-            deployment_package: '${{ github.ref_name }}_${{ github.sha }}.zip'
+            deployment_package: '${{ github.sha }}.zip'
