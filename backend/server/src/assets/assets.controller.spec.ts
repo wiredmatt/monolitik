@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { PrismaService } from '../prisma.service'
 import { AssetsController } from './assets.controller'
 import { AssetsService } from './assets.service'
 
@@ -9,7 +10,7 @@ describe('AssetsController', () => {
     const module: TestingModule = await Test.createTestingModule(
       {
         controllers: [AssetsController],
-        providers: [AssetsService]
+        providers: [AssetsService, PrismaService]
       }
     ).compile()
 

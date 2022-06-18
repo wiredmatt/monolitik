@@ -1,4 +1,5 @@
 .next
+.netlify
 .turbo
 node_modules
 build

@@ -27,4 +27,5 @@ else {
 }
 exports.default = prisma;
 __exportStar(require("@prisma/client"), exports);
+__exportStar(require("@prisma/client/generator-build/index"), exports);
 //# sourceMappingURL=index.js.map
