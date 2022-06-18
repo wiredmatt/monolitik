@@ -39,8 +39,11 @@ jobs:
           name: File Changes
           uses: tj-actions/changed-files@v23
 
-        - name: Ouput File Changes
-          run: echo '${{ steps.changed-files.outputs.all_changed_files }}'
+        - name: Ouput Changed files
+          run: |
+            for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+              echo $file
+            done
 
         - name: Build and test ui-kit
           if: contains(steps.changed-files.outputs.all_changed_files, '"frontend/ui-kit/')
