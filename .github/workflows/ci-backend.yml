@@ -39,7 +39,7 @@ jobs:
       - id: should_run
         run: echo ::set-output name=value::${{ contains(steps.changes.outputs.all_changed_files, 'backend/') }}
 
-  build_test_deploy:
+  build_test:
       needs: get_file_changes
       if: ${{ needs.get_file_changes.outputs.should_run == 'true' }}
 
@@ -89,7 +89,43 @@ jobs:
 
         - name: Build and test db
           if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
-          run: yarn db build && yarn db test
+          run: yarn db build && yarn db test && exit 0
+  
+  eb_deploy:
+    needs: [get_file_changes, build_test]
+    if: ${{ needs.get_file_changes.outputs.should_run == 'true' && needs.build_test.result == 'success' }}
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: 
+        os: [ubuntu-latest]
+
+    steps:
+        - name: Sets env vars for production
+          run: |
+            echo "DATABASE_URL=$DATABASE_URL_PROD" >> $GITHUB_ENV
+          if: ${{ github.ref_name == 'main' }}
+
+        - name: Sets env vars for side branches
+          if: ${{ github.ref_name != 'main' }}
+          run: |
+            echo "DATABASE_URL=$DATABASE_URL_MOCK" >> $GITHUB_ENV
+
+        - name: Add yarn to EB
+          uses: "finnp/create-file-action@master"
+          env:
+            FILE_NAME: "./.platform/hooks/prebuild"
+            FILE_DATA: "
+              #!/bin/bash
+              sudo curl — silent — location https://rpm.nodesource.com/setup_16.x | sudo bash -
+              sudo yum -y install nodejs
+              sudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
+              cd /var/app/current/
+              yarn
+              "
+        
+        - name: Allow prebuild to run
+          run: chmod a+x ./.platform/hooks/prebuild
 
         - name: Create Procfile
           uses: "finnp/create-file-action@master"
@@ -97,15 +133,16 @@ jobs:
             FILE_NAME: "Procfile"
             FILE_DATA: "web: yarn db build && yarn server build && yarn server prod"
 
-        - name: Build, test and deploy server
-          if: contains(needs.get_file_changes.outputs.changes, 'backend/server/') || contains(needs.get_file_changes.outputs.changes, '"backend/db/')
-          run: |
-              yarn db build
-              yarn server build && yarn server test
-              zip -9 -qr '${{ github.sha }}.zip' .
+        - name: Create npmrc
+          uses: "finnp/create-file-action@master"
+          env:
+            FILE_NAME: ".npmrc"
+            FILE_DATA: "unsafe-perm=true"
+
+        - name: Zip
+          run: zip -9 -qr '${{ github.sha }}.zip' .
           
         - name: Deploy to Beanstalk
-          if: contains(needs.get_file_changes.outputs.changes, 'backend/server/') || contains(needs.get_file_changes.outputs.changes, '"backend/db/')
           uses: einaregilsson/beanstalk-deploy@v18
           with:
             aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
