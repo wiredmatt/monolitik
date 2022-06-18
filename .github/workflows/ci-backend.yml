@@ -112,13 +112,13 @@ jobs:
             echo "DATABASE_URL=$DATABASE_URL_MOCK" >> $GITHUB_ENV
 
         - name: Set up EB hooks
-          run: mkdir -p ./.platform/hooks
+          run: mkdir -p .platform/hooks
 
         - name: Copy hook file
           uses: canastro/copy-file-action@master
           with:
-            source: "./_config/eb/prebuild"
-            target: "./.platform/hooks/prebuild"
+            source: "_config/scripts/eb/prebuild"
+            target: ".platform/hooks/prebuild"
 
         - name: Create Procfile
           uses: "finnp/create-file-action@master"
