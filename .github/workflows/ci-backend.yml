@@ -117,9 +117,6 @@ jobs:
             with:
               fetch-depth: 2
 
-          - name: Build db and server
-            run: yarn db build && yarn server build
-
           - name: Create Procfile
             uses: "finnp/create-file-action@master"
             env:
@@ -149,4 +146,4 @@ jobs:
               region: us-east-1
               use_existing_version_if_available: true
               deployment_package: '${{ github.sha }}.zip'
-              wait_for_environment_recovery: 180
+              wait_for_environment_recovery: 240
