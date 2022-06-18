@@ -29,12 +29,12 @@ jobs:
         - name: Sets env vars for production
           run: |
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
-          if: github.ref == 'refs/tags/main'
+          if: ${{ github.ref_name == 'refs/tags/main' }}
 
         - name: Sets env vars for side branches
           run: |
             echo "DATABASE_URL=${{ secrets.DATABASE_URL_MOCK }}" >> $GITHUB_ENV
-          if: github.ref != 'refs/tags/main'
+          if: ${{ github.ref_name != 'refs/tags/main' }}
 
         - name: Check out code
           uses: actions/checkout@v2
