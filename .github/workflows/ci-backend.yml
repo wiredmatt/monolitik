@@ -17,7 +17,7 @@ jobs:
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
         DATABASE_URL: ${{ GITHUB_REF_NAME == 'main' && secrets.DATABASE_URL || secrets.DATABASE_URL-MOCK }}
 
-      name: Build test and deploy frontend
+      name: Build test and deploy backend
       timeout-minutes: 15
       runs-on: ${{ matrix.os }}
 
@@ -54,8 +54,6 @@ jobs:
         - name: Build and test db
           if: contains(steps.changes.outputs.all_changed_files, 'backend/db/')
           run: yarn db build && yarn db test
-          env:
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
         - name: Build, test and deploy server
           if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
@@ -63,9 +61,7 @@ jobs:
               yarn db build 
               yarn server build && yarn server test
               zip -r backend/server/dist deploy.zip               
-          env:
-            DATABASE_URL: ${{ secrets.[format('DATABASE_URL-{0}', env.DB_ENV)]}}
-
+              
         - name: Deploy to Beanstalk
           if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
           uses: einaregilsson/beanstalk-deploy@v18
