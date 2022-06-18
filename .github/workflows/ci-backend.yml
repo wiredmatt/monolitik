@@ -89,6 +89,10 @@ jobs:
         - name: Build and test db
           if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
           run: yarn db build && yarn db test
+
+        - name: Build and test server
+          if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/server/') || contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
+          run: yarn server build && yarn db server
         
   eb_deploy:
       needs: [get_file_changes, build_test]
@@ -113,14 +117,14 @@ jobs:
             with:
               fetch-depth: 2
 
+          - name: Build db and server
+            run: yarn db build && yarn server build
+
           - name: Create Procfile
             uses: "finnp/create-file-action@master"
             env:
               FILE_NAME: ".Procfile"
               FILE_DATA: "web: yarn server prod"
-
-          - name: Debug
-            run: pwd && ls
 
           - name: Copy EB hooks directory
             run: cp -R _config/.platform .platform 
@@ -130,6 +134,9 @@ jobs:
 
           - name: Zip
             run: zip -qr '${{ github.sha }}.zip' .
+
+          - name: Debug
+            run: pwd && ls
             
           - name: Deploy to Beanstalk
             uses: einaregilsson/beanstalk-deploy@v18
