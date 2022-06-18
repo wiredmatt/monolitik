@@ -21,6 +21,11 @@ jobs:
       changes: ${{ steps.changes.outputs.all_changed_files }}
 
     steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+            fetch-depth: 2
+
       - id: changes
         name: File Changes
         uses: tj-actions/changed-files@v23
