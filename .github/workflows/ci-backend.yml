@@ -61,17 +61,12 @@ jobs:
 
       steps:
 
-        - name: Install yarn
-          run: npm i -g yarn
-
         - name: Sets env vars for production
-          run: |
-            echo "DATABASE_URL=$DATABASE_URL_PROD" >> $GITHUB_ENV
+          run: echo "DATABASE_URL=$DATABASE_URL_PROD" >> $GITHUB_ENV
           if: ${{ github.ref_name == 'main' }}
 
         - name: Sets env vars for side branches
-          run: |
-            echo "DATABASE_URL=$DATABASE_URL_MOCK" >> $GITHUB_ENV
+          run: echo "DATABASE_URL=$DATABASE_URL_MOCK" >> $GITHUB_ENV
           if: ${{ github.ref_name != 'main' }}
 
         - name: Check out code
@@ -105,9 +100,6 @@ jobs:
           os: [ubuntu-latest]
 
       steps:
-          - name: Install yarn
-            run: npm i -g yarn
-
           - name: Sets env vars for production
             run: echo "DATABASE_URL=$DATABASE_URL_PROD" >> $GITHUB_ENV
             if: ${{ github.ref_name == 'main' }}
@@ -119,17 +111,17 @@ jobs:
           - name: Create Procfile
             uses: "finnp/create-file-action@master"
             env:
-              FILE_NAME: "Procfile"
+              FILE_NAME: "../Procfile"
               FILE_DATA: "web: yarn server prod"
 
           - name: Debug
             run: pwd && ls
 
           - name: Copy EB hooks directory
-            run: cp -R _config/.platform .platform 
+            run: cp -R ../_config/.platform .platform 
 
           - name: Cleanup unnecesary packages for zip
-            run: rm -rf frontend .github
+            run: rm -rf ../frontend ../.github
 
           - name: Zip
             run: zip -9 -qr '${{ github.sha }}.zip' .
