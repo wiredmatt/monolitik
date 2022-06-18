@@ -1,0 +1,19 @@
+#!/bin/bash
+if node -v; then
+    echo 'Node already installed.'
+else
+    echo 'Installing node...'
+    sudo curl — silent — location https://rpm.nodesource.com/setup_16.x | sudo bash -
+    yum -y install nodejs
+fi
+
+if yarn -v; then
+    echo 'Yarn already installed.'
+else
+    echo 'Installing yarn...'  
+    sudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
+    sudo yum -y install yarn
+fi
+
+cd /var/app/current/
+yarn --ignore-engines
