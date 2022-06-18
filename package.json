@@ -2,6 +2,7 @@
   "name": "monolitik",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "_config/*",
     "backend/*",

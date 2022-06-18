@@ -15,7 +15,8 @@ model User {
 }
 
 model Asset {
-    id Int @id @default(autoincrement())
+    id   Int    @id @default(autoincrement())
+    name String @unique
 }
 
 enum Role {
