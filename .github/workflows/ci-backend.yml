@@ -15,7 +15,6 @@ jobs:
       env:
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-        DATABASE_URL: ${{ GITHUB_REF_NAME == 'main' && secrets.DATABASE_URL || secrets.DATABASE_URL-MOCK }}
 
       name: Build test and deploy backend
       timeout-minutes: 15
@@ -26,6 +25,16 @@ jobs:
           os: [ubuntu-latest]
 
       steps:
+
+        - name: Sets env vars for production
+          run: |
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          if: github.ref == 'refs/tags/main'
+
+        - name: Sets env vars for side branches
+          run: |
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL_MOCK }}" >> $GITHUB_ENV
+          if: github.ref != 'refs/tags/main'
 
         - name: Check out code
           uses: actions/checkout@v2
@@ -61,7 +70,7 @@ jobs:
               yarn db build 
               yarn server build && yarn server test
               zip -r backend/server/dist deploy.zip               
-              
+
         - name: Deploy to Beanstalk
           if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
           uses: einaregilsson/beanstalk-deploy@v18
