@@ -21,6 +21,7 @@ jobs:
       changes: ${{ steps.changes.outputs.all_changed_files }}
 
     steps:
+
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -59,6 +60,9 @@ jobs:
           os: [ubuntu-latest]
 
       steps:
+
+        - name: Install yarn
+          run: npm i -g yarn
 
         - name: Sets env vars for production
           run: |
@@ -101,6 +105,9 @@ jobs:
           os: [ubuntu-latest]
 
       steps:
+          - name: Install yarn
+            run: npm i -g yarn
+
           - name: Sets env vars for production
             run: echo "DATABASE_URL=$DATABASE_URL_PROD" >> $GITHUB_ENV
             if: ${{ github.ref_name == 'main' }}
