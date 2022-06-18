@@ -41,7 +41,7 @@ jobs:
 
   build_test_deploy:
       needs: get_file_changes
-      if: ${{ needs.get_file_changes.outputs.should_run }}
+      if: ${{ needs.get_file_changes.outputs.should_run == 'true' }}
 
       # To use Remote Caching, uncomment the next lines and follow the steps below.
       env:
@@ -95,7 +95,7 @@ jobs:
           uses: "finnp/create-file-action@master"
           env:
             FILE_NAME: "Procfile"
-            FILE_DATA: "web: yarn server prod"
+            FILE_DATA: "web: node backend/server/dist/main.js"
 
         - name: Build, test and deploy server
           if: contains(needs.get_file_changes.outputs.changes, 'backend/server/') || contains(needs.get_file_changes.outputs.changes, '"backend/db/')
