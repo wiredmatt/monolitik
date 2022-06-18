@@ -120,7 +120,7 @@ jobs:
           - name: Create Procfile
             uses: "finnp/create-file-action@master"
             env:
-              FILE_NAME: ".Procfile"
+              FILE_NAME: "Procfile"
               FILE_DATA: "web: yarn server prod"
 
           - name: Copy EB hooks directory
