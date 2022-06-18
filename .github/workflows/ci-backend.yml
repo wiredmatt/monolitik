@@ -95,7 +95,7 @@ jobs:
           uses: "finnp/create-file-action@master"
           env:
             FILE_NAME: "Procfile"
-            FILE_DATA: "web: node backend/server/dist/main.js"
+            FILE_DATA: "web: yarn db build && yarn server build && yarn server prod"
 
         - name: Build, test and deploy server
           if: contains(needs.get_file_changes.outputs.changes, 'backend/server/') || contains(needs.get_file_changes.outputs.changes, '"backend/db/')
