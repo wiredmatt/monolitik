@@ -112,7 +112,7 @@ jobs:
             echo "DATABASE_URL=$DATABASE_URL_MOCK" >> $GITHUB_ENV
 
         - name: Set up EB hooks
-          run: mkdir -p ./.platform/hooks && cp _config/scripts/eb/prebuild ./.platform/hooks/prebuild
+          run: mkdir -p ./.platform/hooks && cp ./_config/scripts/eb/prebuild ./.platform/hooks/prebuild
 
         - name: Create Procfile
           uses: "finnp/create-file-action@master"
