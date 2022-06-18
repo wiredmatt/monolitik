@@ -10,8 +10,8 @@
     "eslint-config-base": "*"
   },
   "scripts": {
-    "build": "tsc --build",
-    "migrate": "yarn prisma generate && yarn build && yarn prisma migrate dev && yarn prisma migrate deploy"
+    "build": "yarn prisma generate && tsc --build",
+    "migrate": "yarn build && yarn prisma migrate dev && yarn prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^3.10.0"

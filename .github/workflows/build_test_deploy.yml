@@ -63,9 +63,9 @@ jobs:
 
         - name: Build, test and deploy server
           if: contains(steps.changed-files.outputs.all_changed_files, '"backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
-          run: |
-            yarn server build && yarn server test
-            zip -r deploy.zip backend/server/dist
+          run: yarn server build && yarn server test && zip -r backend/server/dist deploy.zip 
+
+        - name: Deploy to Beanstalk
           uses: einaregilsson/beanstalk-deploy@v18
           with:
             aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
