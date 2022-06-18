@@ -35,7 +35,7 @@ jobs:
         - name: Install dependencies
           run: yarn
         
-        - id: file_changes
+        - id: changed-files
           name: File Changes
           uses: tj-actions/changed-files@v23
 
