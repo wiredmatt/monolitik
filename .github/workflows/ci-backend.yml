@@ -15,6 +15,8 @@ jobs:
       env:
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DATABASE_URL_MOCK: ${{ secrets.DATABASE_MOCK }}
 
       name: Build test and deploy backend
       timeout-minutes: 15
@@ -28,12 +30,12 @@ jobs:
 
         - name: Sets env vars for production
           run: |
-            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+            echo DATABASE_URL=$DATABASE_URL >> $GITHUB_ENV
           if: ${{ github.ref_name == 'refs/tags/main' }}
 
         - name: Sets env vars for side branches
           run: |
-            echo "DATABASE_URL=${{ secrets.DATABASE_URL_MOCK }}" >> $GITHUB_ENV
+            echo DATABASE_URL=$DATABASE_URL_MOCK >> $GITHUB_ENV
           if: ${{ github.ref_name != 'refs/tags/main' }}
 
         - name: Check out code
