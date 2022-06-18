@@ -88,7 +88,7 @@ jobs:
           run: yarn
 
         - name: Build and test db
-          if: contains(steps.changes.outputs.all_changed_files, 'backend/db/')
+          if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
           run: yarn db build && yarn db test
 
         - name: Create Procfile
