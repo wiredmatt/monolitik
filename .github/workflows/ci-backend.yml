@@ -115,6 +115,9 @@ jobs:
               FILE_NAME: "Procfile"
               FILE_DATA: "web: yarn server prod"
 
+          - name: Debug
+            run: pwd && ls
+
           - name: Copy EB hooks directory
             run: cp -R _config/.platform .platform 
 
