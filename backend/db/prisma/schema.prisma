@@ -4,7 +4,7 @@ datasource db {
     shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-// RHEL for Elastic Beanstalk
+// rhel-openssl-1.0.x for Elastic Beanstalk
 generator client {
     provider      = "prisma-client-js"
     binaryTargets = ["native", "rhel-openssl-1.0.x"]
