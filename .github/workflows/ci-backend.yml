@@ -71,7 +71,7 @@ jobs:
           run: |
               yarn db build
               yarn server build && yarn server test
-              zip -r deploy.zip ./backend/server/dist
+              zip -9 -r deploy.zip ./backend/server
           
         - name: Deploy to Beanstalk
           if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
