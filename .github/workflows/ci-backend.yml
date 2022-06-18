@@ -111,17 +111,33 @@ jobs:
           run: |
             echo "DATABASE_URL=$DATABASE_URL_MOCK" >> $GITHUB_ENV
 
+        - name: Create EB hooks directory
+          run: mkdir -p ./.platform/hooks
+
         - name: Add yarn to EB
           uses: "finnp/create-file-action@master"
           env:
             FILE_NAME: "./.platform/hooks/prebuild"
             FILE_DATA: "
               #!/bin/bash
-              sudo curl — silent — location https://rpm.nodesource.com/setup_16.x | sudo bash -
-              sudo yum -y install nodejs
-              sudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
+              if node -v; then
+                  echo 'Node already installed.'
+              else
+                  echo 'Installing node...'
+                  sudo curl — silent — location https://rpm.nodesource.com/setup_16.x | sudo bash -
+                  yum -y install nodejs
+              fi
+
+              if yarn -v; then
+                echo 'Yarn already installed.'
+              else
+                echo 'Installing yarn...'  
+                sudo wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
+                sudo yum -y install yarn
+              fi
+
               cd /var/app/current/
-              yarn
+              yarn --ignore-engines
               "
         
         - name: Allow prebuild to run
