@@ -95,8 +95,8 @@ jobs:
           run: yarn server build && yarn db server
         
   eb_deploy:
-      needs: [get_file_changes, build_test]
-      if: ${{ needs.get_file_changes.outputs.should_run == 'true' && needs.build_test.result == 'success' }}
+      # needs: [get_file_changes, build_test]
+      # if: ${{ needs.get_file_changes.outputs.should_run == 'true' && needs.build_test.result == 'success' }}
 
       runs-on: ${{ matrix.os }}
       strategy:
@@ -146,4 +146,4 @@ jobs:
               region: us-east-1
               use_existing_version_if_available: true
               deployment_package: '${{ github.sha }}.zip'
-              wait_for_environment_recovery: 240
+              wait_for_deployment: false
