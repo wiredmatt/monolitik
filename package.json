@@ -20,7 +20,8 @@
     "server": "yarn workspace server",
     "landing": "yarn workspace landing",
     "a-d": "yarn workspace admin-dashboard",
-    "ui": "yarn workspace ui-kit"
+    "ui": "yarn workspace ui-kit",
+    "backend:build": "yarn db build && yarn server build"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
