@@ -80,7 +80,7 @@ jobs:
           run: |
               yarn db build
               yarn server build && yarn server test
-              zip -9 -r deploy.zip .
+              zip -9 -qr '${{ github.ref_name }}_${{ github.sha }}.zip' .
           
         - name: Deploy to Beanstalk
           if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
@@ -90,7 +90,7 @@ jobs:
             aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             application_name: monolitik-server
             environment_name: Monolitikserver-env
-            version_label: '${{ github.ref_name }}@${{ github.sha }}'
+            version_label: '${{ github.ref_name }}_${{ github.sha }}'
             region: us-east-1
             use_existing_version_if_available: true
-            deployment_package: deploy.zip
+            deployment_package: '${{ github.ref_name }}_${{ github.sha }}.zip'
