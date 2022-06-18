@@ -2,14 +2,14 @@ name: CI
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  build_and_test:
-      name: Build and Test only affected code
+  build_test_deploy:
+      name: Build test and deploy only affected code
       timeout-minutes: 15
       runs-on: ${{ matrix.os }}
       # To use Remote Caching, uncomment the next lines and follow the steps below.
@@ -61,6 +61,18 @@ jobs:
           if: contains(steps.changed-files.outputs.all_changed_files, '"backend/db/')
           run: yarn db build && yarn db test
 
-        - name: Build and test server
+        - name: Build, test and deploy server
           if: contains(steps.changed-files.outputs.all_changed_files, '"backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
-          run: yarn server build && yarn server test
+          run: |
+            yarn server build && yarn server test
+            zip -r deploy.zip backend/server/dist
+          uses: einaregilsson/beanstalk-deploy@v18
+          with:
+            aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            application_name: monolitik-server
+            environment_name: Monolitikserver-env
+            version_label: ${{ github.sha }}
+            region: us-east-1
+            use_existing_version_if_available: true
+            deployment_package: deploy.zip
