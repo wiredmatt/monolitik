@@ -69,7 +69,7 @@ jobs:
         - name: Build, test and deploy server
           if: contains(steps.changes.outputs.all_changed_files, 'backend/server/') || contains(steps.file_changes.outputs.files , '"backend/db/')
           run: |
-              yarn db build 
+              yarn db build
               yarn server build && yarn server test
               zip -r backend/server/dist deploy.zip
           
