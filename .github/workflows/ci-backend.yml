@@ -1,10 +1,8 @@
 name: ci-backend
-# TODO: replace secrets.DATABASE_URL with secrets.DATABASE_URL-$GITHUB-REF-NAME
+
 on:
   push:
-    # b/server/add-assets-crud
-    # b/server/fix-auth
-    branches: ["main", "dev", "b/**"]
+    branches: ["main", "dev"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -141,7 +139,7 @@ jobs:
               aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
               aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               application_name: monolitik-server
-              environment_name: monolitikserver-env-1
+              environment_name: monolitikserver-env-prod
               version_label: '${{ github.ref_name }}_${{ github.sha }}'
               region: us-east-1
               use_existing_version_if_available: true
