@@ -129,9 +129,9 @@ jobs:
 
           - name: Copy EB hooks directory
             run: cp -R _config/.platform .platform 
-
-          - name: Cleanup unnecesary packages for zip
-            run: rm -rf frontend
+          
+          - name: Cleanup unnecesary packages for build
+            run: rm -rf frontend .github blockchain
 
           - name: Zip
             run: zip -qr '${{ github.sha }}.zip' .
