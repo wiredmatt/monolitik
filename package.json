@@ -7,10 +7,10 @@
     "_config/*",
     "backend/*",
     "frontend/*",
-    "linters/*"
+    "linters/*",
+    "blockchain"
   ],
   "scripts": {
-    "yarn": "yarn install 2> >(grep -v warning 1>&2)",
     "prepare": "is-ci || husky install .github/husky",
     "build": "turbo run build",
     "test": "turbo run test",
@@ -18,6 +18,8 @@
     "lint": "turbo run lint",
     "db": "yarn workspace db",
     "api": "yarn workspace api",
+    "common": "yarn workspace common",
+    "blockchain": "yarn workspace blockchain",
     "landing": "yarn workspace landing",
     "a-d": "yarn workspace admin-dashboard",
     "ui": "yarn workspace ui-kit",

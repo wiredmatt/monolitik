@@ -17,8 +17,12 @@ model User {
 }
 
 model Asset {
-    id   Int    @id @default(autoincrement())
-    name String @unique
+    id          Int    @id @default(autoincrement())
+    name        String @unique
+    symbol      String @unique
+    address     String @unique // to where the contract got deployed
+    beneficiary String // address that'll receive all the tokens
+    supply      Int
 }
 
 enum Role {

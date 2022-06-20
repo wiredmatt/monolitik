@@ -2,6 +2,7 @@
   "name": "db",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@types/node": "^17.0.19",
     "prisma": "^3.10.0",

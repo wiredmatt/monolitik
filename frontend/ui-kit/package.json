@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "lint": "prettier --write . --ignore-path <(cat ../../.prettierignore) && eslint --fix --ignore-pattern <(cat ../../.eslintignore)",
     "build": "NODE_ENV=production tailwind build -i index.css -o dist/tailwind.css",

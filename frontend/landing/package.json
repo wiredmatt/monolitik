@@ -1,6 +1,7 @@
 {
   "name": "landing",
   "version": "1.0.0",
+  "license": "UNLICENSED",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",

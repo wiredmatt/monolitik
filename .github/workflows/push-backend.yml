@@ -78,7 +78,7 @@ jobs:
             cache: 'yarn'
 
         - name: Cleanup unnecesary packages for build
-          run: rm -rf frontend .github
+          run: rm -rf frontend .github blockchain
 
         - name: Install dependencies
           run: yarn
