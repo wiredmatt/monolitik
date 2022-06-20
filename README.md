@@ -53,7 +53,7 @@ yarn api dev
 - Adding the web3 and web3-utils dependencies to the api
 
 ```bash
-yarn landing add web3 web3-utils
+yarn api add web3 web3-utils
 ```
 
 - Adding the **db** package to the api as a dependency
@@ -64,9 +64,17 @@ yarn api add "db@*"
 
 ### Extra
 
-#### linters
+#### _config
 
-A collection of presets for eslint rules and configuration
+
+`tsconfig`: A collection of tsconfig files
+
+- **base**: Generic TS code
+- **next**: For NextJS apps
+- **react-library**: For React Apps and component libraries 
+
+
+`linter-*`: Presets for eslint rules and configuration
 
 - **base**: Generic rules
 - **nest**: For NestJS apps
@@ -75,13 +83,7 @@ A collection of presets for eslint rules and configuration
 
 If you want to create a new linter, duplicate one of the existing directories and override the `index.js` file as needed.
 
-#### _config
-
-A collection of tsconfig files
-
-- **base**: Generic TS code
-- **next**: For NextJS apps
-- **react-library**: For React Apps and component libraries 
+`.platform`: not really a package, but I didn't like having it in the root of the project. An elastic beanstalk-specific prebuild hook, that will install yarn and build the prisma client.
 
 #### CI/CD
 
@@ -94,6 +96,13 @@ env:
 ```
 
 Make sure to configurate your secrets and fill in the variables above. [Guide](https://turborepo.org/docs/ci/github-actions#remote-caching)
+
+Talking about secrets, you should also add the following ones:
+
+- DATABASE_URL_PROD
+- DATABASE_URL_MOCK
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
 
 ### Deployments
 
@@ -132,7 +141,7 @@ Choose:
 6. For directory to deploy, choose the output directory that the build command generates. Nextjs outputs to `.next` and react does so to `build`. Following the landing example, you will input `frontend/landing/build`
 7. Leave blank for functions
 
-Make sure to enable notifications in the site settings (in the netlify dashboard).
+Make sure to enable notifications in the site settings (in the netlify dashboard). That's it, every time you push to origin netlify will make a new deployment.
 
 #### Deploy a service to Elastic Beanstalk
 
