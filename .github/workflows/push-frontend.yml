@@ -1,13 +1,10 @@
 name: ci-frontend
-
+# TODO: Deploy to Netlify / Vercel from here instead of linking the entire monorepo from their interface.
 on:
   push:
     # f/landing/add-seo
     # f/admin-dashboard/fix-login
     branches: ["main", "dev", "f/**"] 
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 jobs:
   get_file_changes:
@@ -21,6 +18,7 @@ jobs:
       changes: ${{ steps.changes.outputs.all_changed_files }}
 
     steps:
+
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -39,7 +37,7 @@ jobs:
       - id: should_run
         run: echo ::set-output name=value::${{ contains(steps.changes.outputs.all_changed_files, 'frontend/') }}
 
-  build_test_deploy:
+  build_test:
       needs: get_file_changes
       if: ${{ needs.get_file_changes.outputs.should_run == 'true' }}
 
@@ -65,6 +63,9 @@ jobs:
           with:
             node-version: 16
             cache: 'yarn'
+
+        - name: Cleanup unnecesary packages for build
+          run: rm -rf frontend .github
 
         - name: Install dependencies
           run: yarn

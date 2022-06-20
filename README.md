@@ -23,7 +23,7 @@ There are 6 main packages in this monorepo:
 
 * backend
   - **db**: Prisma models & DB interface
-  - **server**: REST API
+  - **api**: REST API
 
 * frontend
   - **landing**: landing page
@@ -35,7 +35,7 @@ You can interact with them through the following scripts:
 ```json
 "scripts": {
   "db": "yarn workspace db",
-  "server": "yarn workspace server",
+  "api": "yarn workspace api",
   "landing": "yarn workspace landing", 
   "a-d": "yarn workspace admin-dashboard", 
   "ui": "yarn workspace ui-kit" 
@@ -44,22 +44,22 @@ You can interact with them through the following scripts:
 
 ### Examples
 
-- Run the server in dev mode:
+- Run the api in dev mode:
 
 ```bash
-yarn server dev
+yarn api dev
 ```
 
-- Adding the web3 and web3-utils dependencies to the server
+- Adding the web3 and web3-utils dependencies to the api
 
 ```bash
 yarn landing add web3 web3-utils
 ```
 
-- Adding the **db** package to the server as a dependency
+- Adding the **db** package to the api as a dependency
 
 ```bash
-yarn server add "db@*"
+yarn api add "db@*"
 ```
 
 ### Extra
@@ -131,3 +131,22 @@ Choose:
 5. For build command, input `yarn build`
 6. For directory to deploy, choose the output directory that the build command generates. Nextjs outputs to `.next` and react does so to `build`. Following the landing example, you will input `frontend/landing/build`
 7. Leave blank for functions
+
+Make sure to enable notifications in the site settings (in the netlify dashboard).
+
+#### Deploy a service to Elastic Beanstalk
+
+1. Create a new app in EB, and set the DATABASE_URL environment variable
+2. Update [ci-backend.yml](.github/workflows/ci-backend.yml),make build and deploy steps for the new service, for example:
+
+At the end of `build_test/steps`, add:
+
+```yaml
+- name: Build and test cart-service
+  if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/cart-service/') || contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
+  run:  yarn db build && yarn cart-service build
+```
+
+And then you can copy-paste the existing `eb_deploy` job, just replace it according to the parameters of the new service you want to create.
+
+You should also play around with the conditional building and deployments for the affected services on push. At the time of writing this, the repo uses only one service (`api`), but for future releases it might include more.

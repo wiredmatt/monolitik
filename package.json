@@ -17,11 +17,11 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "db": "yarn workspace db",
-    "server": "yarn workspace server",
+    "api": "yarn workspace api",
     "landing": "yarn workspace landing",
     "a-d": "yarn workspace admin-dashboard",
     "ui": "yarn workspace ui-kit",
-    "backend:build": "yarn db build && yarn server build"
+    "backend:build": "yarn db build && yarn api build"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",

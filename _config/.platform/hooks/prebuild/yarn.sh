@@ -13,6 +13,6 @@ yarn install
 
 yarn db build
 
-yarn server build
+yarn api build
 
 echo "Done with install and builds"
