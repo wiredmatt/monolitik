@@ -70,9 +70,9 @@ jobs:
         - name: Install dependencies
           run: yarn
           
-        - name: Build and test ui-kit
+        - name: Build and test ui
           if: contains(needs.get_file_changes.outputs.changes, 'frontend/ui-kit/')
-          run: yarn ui-kit build && yarn ui-kit test
+          run: yarn ui build && yarn ui test
 
         - name: Build and test admin-dashboard
           if: contains(needs.get_file_changes.outputs.changes, 'frontend/admin-dashboard/') || contains(needs.get_file_changes.outputs.changes, '"frontend/uikit/')
