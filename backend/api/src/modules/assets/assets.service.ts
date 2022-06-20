@@ -10,30 +10,44 @@ export class AssetsService {
   constructor(private prismaService: PrismaService) {}
 
   async create(createAssetDto: CreateAssetDto) {
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.BLOCKCHAIN_NODE
-    )
+    let address: string | undefined
 
-    const wallet = new ethers.Wallet(
-      process.env.BLOCKCHAIN_PRIVATE_KEY,
-      provider
-    )
+    if (!createAssetDto.address) {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.BLOCKCHAIN_NODE
+      )
 
-    const tokenizedAssetInterface = new TokenizedAsset__factory(
-      wallet
-    )
+      const wallet = new ethers.Wallet(
+        process.env.BLOCKCHAIN_PRIVATE_KEY,
+        provider
+      )
 
-    const tokenizedAsset = await tokenizedAssetInterface.deploy(
-      createAssetDto.name,
-      createAssetDto.symbol,
-      createAssetDto.beneficiary,
-      createAssetDto.supply.toString()
-    )
+      const tokenizedAssetInterface =
+        new TokenizedAsset__factory(wallet)
+
+      const tokenizedAsset =
+        await tokenizedAssetInterface.deploy(
+          createAssetDto.name,
+          createAssetDto.symbol,
+          createAssetDto.beneficiary,
+          createAssetDto.supply.toString()
+        )
+
+      address = tokenizedAsset.address
+    } else {
+      // TODO: Check if address is valid
+      // TODO: Check if address is not already in use
+      // TODO: Check if address corresponds to a contract
+      // with the correct ABI
+      // TODO: Check if contract address was deployed by the
+      // user sending this request
+      address = createAssetDto.address
+    }
 
     return this.prismaService.asset.create({
       data: {
         ...createAssetDto,
-        address: tokenizedAsset.address
+        address
       }
     })
   }
