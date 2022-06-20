@@ -91,6 +91,10 @@ jobs:
           if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/api/') || contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
           run: yarn db build && yarn api build && yarn api test
         
+        - name: Deploy DB migrations
+          if: contains(needs.get_file_changes.outputs.all_changed_files, 'backend/api/') || contains(needs.get_file_changes.outputs.all_changed_files, 'backend/db/')
+          run: yarn db prisma deploy
+        
   eb_deploy_api:
       needs: [get_file_changes, build_test]
       if: |
@@ -105,12 +109,12 @@ jobs:
 
       steps:
           - name: Sets env vars for production
-            run: echo "EB_ENV=monolitikapi-env-prod" >> $GITHUB_ENV
+            run: echo "EB_ENV=prod" >> $GITHUB_ENV
             if: ${{ github.ref_name == 'main' }}
 
           - name: Sets env vars for development
             if: ${{ github.ref_name == 'dev' }}
-            run: echo "EB_ENV=monolitikapi-env-dev" >> $GITHUB_ENV
+            run: echo "EB_ENV=dev" >> $GITHUB_ENV
 
           - name: Check out code
             uses: actions/checkout@v2
