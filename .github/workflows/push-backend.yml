@@ -109,12 +109,12 @@ jobs:
 
       steps:
           - name: Sets env vars for production
-            run: echo "EB_ENV=prod" >> $GITHUB_ENV
+            run: echo "EB_ENV=env-prod" >> $GITHUB_ENV
             if: ${{ github.ref_name == 'main' }}
 
           - name: Sets env vars for development
             if: ${{ github.ref_name == 'dev' }}
-            run: echo "EB_ENV=dev" >> $GITHUB_ENV
+            run: echo "EB_ENV=env-dev" >> $GITHUB_ENV
 
           - name: Check out code
             uses: actions/checkout@v2
