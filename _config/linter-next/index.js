@@ -12,7 +12,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/button-has-type': 'off',
     'react/prop-types': 'off',
-    semi: 'off',
     'trailing-comma': 'off',
     '@typescript-eslint/no-var-requires': 'off'
   },
@@ -25,4 +24,4 @@ module.exports = {
     }
   },
   plugins: ['prettier']
-}
+};

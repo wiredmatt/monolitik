@@ -3,7 +3,7 @@ name: ci-frontend
 on:
   push:
     # f/landing/add-seo
-    # f/admin-dashboard/fix-login
+    # f/dashboard/fix-login
     branches: ["main", "dev", "f/**"] 
 
 jobs:
@@ -74,9 +74,9 @@ jobs:
           if: contains(needs.get_file_changes.outputs.changes, 'frontend/ui-kit/')
           run: yarn ui build && yarn ui test
 
-        - name: Build and test admin-dashboard
-          if: contains(needs.get_file_changes.outputs.changes, 'frontend/admin-dashboard/') || contains(needs.get_file_changes.outputs.changes, '"frontend/uikit/')
-          run: yarn admin-dashboard build && yarn admin-dashboard test
+        - name: Build and test dashboard
+          if: contains(needs.get_file_changes.outputs.changes, 'frontend/dashboard/') || contains(needs.get_file_changes.outputs.changes, '"frontend/uikit/')
+          run: yarn dashboard build && yarn dashboard test
           
         - name: Build and test landing
           if: contains(needs.get_file_changes.outputs.changes, 'frontend/landing/') || contains(needs.get_file_changes.outputs.changes, '"frontend/uikit/')

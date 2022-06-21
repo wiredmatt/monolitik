@@ -21,7 +21,8 @@
     "common": "yarn workspace common",
     "blockchain": "yarn workspace blockchain",
     "landing": "yarn workspace landing",
-    "a-d": "yarn workspace admin-dashboard",
+    "dashboard": "yarn workspace dashboard",
+    "marketplace": "yarn workspace marketplace",
     "ui": "yarn workspace ui-kit",
     "backend:build": "yarn db build && yarn api build"
   },

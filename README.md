@@ -27,7 +27,7 @@ There are 6 main packages in this monorepo:
 
 * frontend
   - **landing**: landing page
-  - **admin-dashboard**: admin dashboard
+  - **dashboard**: user dashboard
   - **ui-kit**: reusable react components
 
 You can interact with them through the following scripts:
@@ -37,7 +37,7 @@ You can interact with them through the following scripts:
   "db": "yarn workspace db",
   "api": "yarn workspace api",
   "landing": "yarn workspace landing", 
-  "a-d": "yarn workspace admin-dashboard", 
+  "dashboard": "yarn workspace dashboard", 
   "ui": "yarn workspace ui-kit" 
 },
 ```
